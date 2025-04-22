@@ -3,25 +3,23 @@ import CredentialsProvider from "next-auth/providers/credentials"
 
 const handler = NextAuth({
   providers: [
-    // Видалено Google провайдер
-    // Залишаємо тільки Telegram (імітація) та Credentials
-    {
-      id: "telegram",
-      name: "Telegram",
-      type: "oauth",
-      // Це спрощена імітація Telegram OAuth для демонстрації
-      // В реальному додатку потрібно використовувати справжню інтеграцію з Telegram Login Widget
-      authorization: "https://oauth.telegram.org/auth",
-      token: "https://oauth.telegram.org/token",
-      userinfo: "https://oauth.telegram.org/userinfo",
-      profile(profile) {
+   {
+    id: "telegram",
+    name: "Telegram",
+    type: "credentials",
+    credentials: {},
+    async authorize(credentials, req) {
+      const { id, first_name, last_name, photo_url }:any = req.query;
+      if (id && first_name) {
         return {
-          id: profile.id,
-          name: profile.first_name + " " + profile.last_name,
-          image: profile.photo_url,
-        }
-      },
+          id,
+          name: `${first_name} ${last_name || ""}`,
+          image: photo_url || null,
+        };
+      }
+      return null;
     },
+  },
     CredentialsProvider({
       name: "Credentials",
       credentials: {

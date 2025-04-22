@@ -58,11 +58,9 @@ export default function SignIn() {
         <CardContent>
           <div className="grid gap-4">
             <div className="grid grid-cols-1 gap-4">
-              {/* Видалено кнопку Google, залишено тільки Telegram */}
-              <Button variant="outline" onClick={() => signIn("telegram", { callbackUrl: "/dashboard" })}>
-                <BrandTelegram className="mr-2 h-4 w-4" />
-                Telegram
-              </Button>
+              <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-login="BookingFirstMastersBot" data-size="large" data-auth-url="/api/auth/callback/telegram" data-request-access="write">
+              </script>
+
             </div>
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
